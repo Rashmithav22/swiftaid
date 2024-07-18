@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LifeGuard</title>
+    <title>SwiftAid</title>
 
     <link
       rel="stylesheet"
@@ -47,7 +47,7 @@
         <nav class="nav container-liquid">
           <!-- Logo -->
           <a href="#" class="nav__logo" onClick="window.location.reload()"
-            >LifeGuard</a
+            >SwiftAid</a
           >
 
           <!-- MENU -->
@@ -118,7 +118,8 @@
           <i class="bx bx-share bx-flip-horizontal" style="color: #ffffff"></i>
         </a>
       </div>
-
+      
+      
       <div style="display: none" id="place">
         <!--=============== SILDE MENU ===============-->
         <div class="wrapper12">
@@ -145,9 +146,39 @@
         <br />
         <br />
       </div>
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+      <script>
+        // Replace with your Mapbox access token
+        mapboxgl.accessToken = '"pk.eyJ1IjoiYW51c3dhciIsImEiOiJjbGo5YjYwYzMxazF2M3BxeXFqempia3JkIn0.qs9af8JaGhmUYQ-DUx_HQQ"';
+    
+        // Function to initialize the map
+        function initializeMap() {
+          // Specify coordinates for the center of your map
+          var centerCoordinates = [-74.5, 40]; // Example coordinates (longitude, latitude)
+    
+          // Initialize the map
+          var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', // Replace with your preferred map style
+            center: centerCoordinates,
+            zoom: 12 // Adjust the zoom level as needed
+          });
+    
+          // Add navigation control to the map
+          map.addControl(new mapboxgl.NavigationControl());
+        }
+    
+        // Call the initializeMap function when the page is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+          initializeMap();
+        });
+      </script>
 
       <div style="display: none" id="aid">
+    
+      
         <div id="first-aid-info"></div>
+
 
         <div class="search-container">
           <input
@@ -337,11 +368,42 @@
       <div style="display: none" id="info">
         <div class="report">
           <div class="section">
+              <!-- Start of Patient Details Section -->
+        <div class="patient-details-container">
+          <h2>Patient Details</h2>
+          <form>
+              <div class="form-group">
+                  <label for="patient-name">Name:</label>
+                  <input type="text" id="patient-name" name="patient-name">
+              </div>
+              <div class="form-group">
+                  <label for="patient-age">Age:</label>
+                  <input type="number" id="patient-age" name="patient-age">
+              </div>
+              <div class="form-group">
+                  <label for="patient-gender">Gender:</label>
+                  <select id="patient-gender" name="patient-gender">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="patient-contact">Contact:</label>
+                  <input type="tel" id="patient-contact" name="patient-contact">
+              </div>
+              <div class="form-group">
+                  <label for="patient-address">Address:</label>
+                  <textarea id="patient-address" name="patient-address"></textarea>
+              </div>
+              <button type="submit">Submit</button>
+          </form>
+      </div>
             <div class="section-title">Patient Details</div>
             <div class="section-content">
               <div>
                 <strong>Name:</strong>
-                <p onclick="makeEditable(this)">John Doe</p>
+                <p onclick="makeEditable(this)">Ramesh Nayak</p>
               </div>
               <div>
                 <strong>Age:</strong>
@@ -367,7 +429,7 @@
             <div class="section-content">
               <div>
                 <strong>Name:</strong>
-                <p onclick="makeEditable(this)">Jane Doe</p>
+                <p onclick="makeEditable(this)">Shubha Nayak</p>
               </div>
               <div>
                 <strong>Relationship:</strong>
@@ -441,16 +503,17 @@
 
       // Create a tile layer with Mapbox Streets data
       L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-        {
-          attribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
-          maxZoom: 20,
-          id: "mapbox/streets-v11",
-          tileSize: 512,
-          zoomOffset: -1,
-          accessToken: "pk.eyJ1IjoiYW51c3dhciIsImEiOiJjbGo5YjYwYzMxazF2M3BxeXFqempia3JkIn0.qs9af8JaGhmUYQ-DUx_HQQ" // Replace with your Mapbox access token
-        }
-      ).addTo(map);
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
+    maxZoom: 20,
+    id: "mapbox/streets-v11",
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: "pk.eyJ1IjoiYW51c3dhciIsImEiOiJjbGo5YjYwYzMxazF2M3BxeXFqempia3JkIn0.qs9af8JaGhmUYQ-DUx_HQQ" // Replace with your Mapbox access token
+  }
+).addTo(map);
+
 
 
       // Fetch user's location and display it on the map
@@ -576,6 +639,7 @@
       map.on("locationfound", onLocationFound);
       
     </script>
+    
 
     <script>
       // Get the SOS button element
